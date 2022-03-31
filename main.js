@@ -19,13 +19,15 @@ function addFilm(e) {
   const director = directorElemnt.value;
   const url = urlElement.value;
 
-  if (title == "" || director == "" || url == "") {
+  if (title === "" || director === "" || url === "") {
     //hata
   } else {
-      //Yeni Film
+    //Yeni Film
     const newFilm = new Film(title, director, url);
 
     ui.addFilmTOUI(newFilm); //Arayüze Film Ekleme
   }
+  //İnput alanını boşalt
+  ui.clearInputs(titleElement, urlElement, directorElemnt);
   e.preventDefault();
 }
