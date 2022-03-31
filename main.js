@@ -20,6 +20,8 @@ function addFilm(e) {
   const url = urlElement.value;
 
   if (title === "" || director === "" || url === "") {
+    ui.displayMessages("Tüm Alanları Doldurun", "danger");
+    ui.displayMessages("Filmler Başarılı bir şekilde yüklendi", "success");
     //hata
   } else {
     //Yeni Film
