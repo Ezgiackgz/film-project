@@ -1,5 +1,5 @@
-function Film(title, directör, url) {
+function Film(title, director, url) {
   this.title = title;
-  this.directör = directör;
+  this.director = director;
   this.url = url;
-}
+} 
