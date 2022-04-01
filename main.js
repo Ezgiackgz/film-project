@@ -1,56 +1,67 @@
 const form = document.getElementById("film-form");
-const titleElement = document.getElementById("title");
-const directorElemnt = document.getElementById("director");
-const urlElement = document.getElementById("url");
-const secondCardBody = document.querySelectorAll(".card-body")[1];
+const titleElement = document.querySelector("#title");
+const directorElement = document.querySelector("#director");
+const urlElement = document.querySelector("#url");
+const cardbody = document.querySelectorAll(".card-body")[1];
+const clear = document.getElementById("clear-films");
 
-//UI objesini başlatma
-
+// UI Objesini Başlatma
 const ui = new UI();
 
-//local storage objesi başlatma
+// Storage Objesi Üret
 const storage = new Storage();
 
-//Tüm event yükleme
+// Tüm eventleri yükleme
 
 eventListeners();
 
 function eventListeners() {
   form.addEventListener("submit", addFilm);
-  //local storageden filmleri çekme
   document.addEventListener("DOMContentLoaded", function () {
     let films = storage.getFilmsFromStorage();
     ui.loadAllFilms(films);
   });
-  secondCardBody.addEventListener("click", deleteFilm);
+
+  cardbody.addEventListener("click", deleteFilm);
+  clear.addEventListener("click", clearAllFilms);
 }
 function addFilm(e) {
   const title = titleElement.value;
-  const director = directorElemnt.value;
+  const director = directorElement.value;
   const url = urlElement.value;
 
   if (title === "" || director === "" || url === "") {
-    ui.displayMessages("Tüm Alanları Doldurun", "danger");
-
-    //hata
+    // Hata
+    ui.displayMessages("Tüm alanları doldurun...", "danger");
   } else {
-    //Yeni Film
+    // Yeni Film
     const newFilm = new Film(title, director, url);
-    ui.displayMessages("Filmler Başarılı bir şekilde yüklendi", "success");
-    //Arayüze Film Ekleme
-    ui.addFilmTOUI(newFilm);
-    //storage film ekleme
-    storage.addFilmToStorage(newFilm);
+
+    ui.addFilmToUI(newFilm); // Arayüze film ekleme
+    storage.addFilmToStorage(newFilm); // Storage'a Film Ekleme
+
+    ui.displayMessages("Film başarıyla eklendi...", "success");
   }
-  //İnput alanını boşalt
-  ui.clearInputs(titleElement, urlElement, directorElemnt);
+
+  ui.clearInputs(titleElement, urlElement, directorElement);
+
   e.preventDefault();
 }
-//Silme İşlemi
 
 function deleteFilm(e) {
-  //console.log(e.target);
-  if (e.target.id == "delete-film") {
+  if (e.target.id === "delete-film") {
     ui.deleteFilmFromUI(e.target);
+    storage.deleteFilmFromStorage(
+      e.target.parentElement.previousElementSibling.previousElementSibling
+        .textContent
+    );
+
+    ui.displayMessages("Silme işlemi başarılı...", "success");
+  }
+}
+function clearAllFilms() {
+  if (confirm("Emin misiniz ?")) {
+    ui.clearAllFilmsFromUI();
+    storage.clearAllFilmsFromStorage();
   }
 }
