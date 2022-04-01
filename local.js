@@ -14,7 +14,7 @@ Storage.prototype.addFilmToStorage = function (newFilm) {
   */
   localStorage.setItem("films", JSON.stringify(films));
 };
-Storage.prototype.getFilmsFormStorage = function () {
+Storage.prototype.getFilmsFromStorage = function () {
   let films;
   if (localStorage.getItem("films") === null) {
     //eğer films adında bir key yoksa boş bir dizi oluştur
