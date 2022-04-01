@@ -17,11 +17,11 @@ eventListeners();
 function eventListeners() {
   form.addEventListener("submit", addFilm);
   //local storageden filmleri çekme
-  document.addEventListener("DOMContentLoaaded", function () {
-    //local storageden dizi şeklinde alma
+  document.addEventListener("DOMContentLoaded",function(){
     let films = storage.getFilmsFromStorage();
     ui.loadAllFilms(films);
-  });
+
+});
 }
 function addFilm(e) {
   const title = titleElement.value;
