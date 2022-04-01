@@ -7,6 +7,9 @@ const urlElement = document.getElementById("url");
 
 const ui = new UI();
 
+//local storage objesi başlatma
+const storage = new Storage();
+
 //Tüm event yükleme
 
 eventListeners();
@@ -21,13 +24,16 @@ function addFilm(e) {
 
   if (title === "" || director === "" || url === "") {
     ui.displayMessages("Tüm Alanları Doldurun", "danger");
-    ui.displayMessages("Filmler Başarılı bir şekilde yüklendi", "success");
+
     //hata
   } else {
     //Yeni Film
     const newFilm = new Film(title, director, url);
-
-    ui.addFilmTOUI(newFilm); //Arayüze Film Ekleme
+    ui.displayMessages("Filmler Başarılı bir şekilde yüklendi", "success");
+    //Arayüze Film Ekleme
+    ui.addFilmTOUI(newFilm);
+    //storage film ekleme
+    storage.addFilmToStorage(newFilm);
   }
   //İnput alanını boşalt
   ui.clearInputs(titleElement, urlElement, directorElemnt);
